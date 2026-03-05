@@ -1,0 +1,36 @@
+name: C Build
+
+on:
+  push:
+    branches: [ main, master, development ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install build tools
+      run: sudo apt-get update && sudo apt-get install -y make gcc
+
+    - name: Build with Make
+      run: make
+
+    - name: Run program (basic test)
+      run: |
+        echo "Testing program execution..."
+        ./bin/lab2-task3 << EOF
+        Иванов И.И.
+        +375291234567
+        1990 5 15
+        Петров П.П.
+        +375297654321
+        1985 10 20
+        Сидоров С.С.
+        +375331234567
+        2000 3 10
+        EOF
